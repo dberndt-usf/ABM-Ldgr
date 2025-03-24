@@ -6,7 +6,7 @@ While implementing the Fed flow-of-funds model, each autonomous agent encapsulat
 
 The <b>Account</b> class provides the basic functionality, including methods to deposit and withdraw funds, as well as check the current balance. Accounts can be grouped into using the <b>Ledger</b> class. For example, all the accounts that represent assets be grouped. The assets ledger can be paired with a liabilities ledger using the <b>BalanceSheet</b> class as part of the internal agent financial data. Again, the instantiated accounts and ledgers can be shared across two or more agents to make financial connections, implementing "flow-of-funds" models.
 
-<h1>Acknowledgements</h1>
+# Acknowledgements
 
 Coordinator: Don Berndt (<a href="mailto:dberndt@usf.edu">dberndt@usf.edu</a>)
 
