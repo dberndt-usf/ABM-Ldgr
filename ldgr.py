@@ -2,11 +2,11 @@
 # -*- coding: utf-8 -*-
 """
 This package defines the Account, Ledger,
-and  BalanceSheet classes for use financial agent-based models.
+and  BalanceSheet classes for use financial in agent-based models.
 A ledger is a collection of accounts that are associated
 with specific agents forming balance sheets.
 
-Copyright 2025-Present Don Berndt @ University of South Florida.
+Copyright 2022-Present Don Berndt @ University of South Florida.
 
 @author: Don Berndt (dberndt@usf.edu)
 """
