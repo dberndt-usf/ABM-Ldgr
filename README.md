@@ -12,6 +12,8 @@ A prototype versions is available on Test PyPI at <a href="https://test.pypi.org
 
 A single file is available here in the repository for use in any Python project.  Simply download the <b>abm-ldgr.py</b> file and import as "from abm-ldgr import *" to use the clases to instantiate accounts, group them as ledgers and create balance sheets.
 
+The <b>ABM-Ldgr.py</b> toolkit is in use on several on-going projects.  New features and refinements are underway for future versions.
+
 # Acknowledgements
 
 Coordinator: Don Berndt (<a href="mailto:dberndt@usf.edu">dberndt@usf.edu</a>)
