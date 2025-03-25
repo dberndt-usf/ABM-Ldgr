@@ -101,11 +101,11 @@ class Account:
     debug = 0
 
     # Initialize account.
-    def __init__(self, name, balance, tag, note, color):
+    def __init__(self, name, balance, tags, note, color):
         # Initialize the core class data.
         self.acc_name = str(name)
         self.acc_balance = float(balance)
-        self.acc_tag = str(tag)
+        self.acc_tags = set(tags)
         self.acc_note = str(note)
         self.acc_deposits = []
         self.acc_withdrawals = []
@@ -157,11 +157,11 @@ class Account:
         return self.acc_snapshots
 
     def show(self):
-        print(self.acc_kind, self.acc_name, self.acc_tag, self.acc_balance)
+        print(self.acc_kind, self.acc_name, self.acc_tags, self.acc_balance)
         print(self.acc_note)
 
-    def tag(self):
-        return self.acc_tag
+    def tags(self):
+        return self.acc_tags
 
 
 

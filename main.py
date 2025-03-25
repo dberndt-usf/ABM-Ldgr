@@ -19,7 +19,7 @@ print("\nInstantiating accounts ...")
 # A couple of tags are added for use in searches.
 cash_account = Account("Cash",
                        0,
-                       "cash",
+                       {'asset', 'cash', 'liquid'},
                        "Current cash.",
                        "green")
 
@@ -38,7 +38,7 @@ print("New Cash Balance:", cash_account.balance())
 # an initial balance of 100,000.
 invoice_account = Account("Invoices",
                           100000,
-                          "invoices",
+                          {'asset', 'invoices'},
                           "Pending invoices.",
                           "blue")
 invoice_account.show()
@@ -55,7 +55,7 @@ assets_ledger.pprint()
 liabilities_ledger = Ledger("Liabilities",
                             [Account("Loans",
                                      30000,
-                                     "loans",
+                                     {'liability', 'loans'},
                                      "Outstanding loans.",
                                      "red")])
 liabilities_ledger.pprint()
