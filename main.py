@@ -1,60 +1,83 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+This is the main test file for the ABM-Ldgr.py toolkit.
+Basically, this includes example code that exercises
+most of the core functionality of the toolkit.
+
+Copyright 2022-Present Don Berndt @ University of South Florida.
+
+@author: Don Berndt (dberndt@usf.edu)
+"""
 
 # Import needed resources.
-import csv
-import sys
+from ldgr import *
 
-from country import *
+print("\nInstantiating accounts ...")
+# Create an initial account with a starting balance of zero.
+# This will serve as a cash account on the balance sheet.
+# A couple of tags are added for use in searches.
+cash_account = Account("Cash",
+                       0,
+                       "cash",
+                       "Current cash.",
+                       "green")
 
-print("Starting FBIC simulation ...")
-print("Python:", sys.version)
+# Look at the account information.
+cash_account.show()
 
-print("Instantiating countries ...")
-# Country codes for all countries.
-country_codes = {'AFG', 'CHE', 'FRA', 'GBR', 'IRN',
-                 'IRQ', 'ITA', 'SYR', 'TUR', 'USA'}
-print("Country Codes:", country_codes)
-# Codes for just the primary countries for analysis.
-primary_codes = {'CHN', 'RUS', 'USA'}
-print("Primary Codes:", primary_codes)
+# Print the current balance.
+print("Cash Balance:", cash_account.balance())
 
-# Read and instantiate countries from the CSV file
-# based on the country code set.
-secondary_countries = []
-with open('data/countries.csv', 'r') as file:
-    csv_reader = csv.reader(file)
-    for row in csv_reader:
-        if row[0] in country_codes - primary_codes:
-            print(row)
-            secondary_countries.append(SecondaryCountry(
-                row[1], row[0], row[2], row[3], row[4], 0, primary_codes))
+# Make a deposit and withdrawal.
+cash_account.deposit(1000)
+cash_account.withdraw(100)
+print("New Cash Balance:", cash_account.balance())
 
-print("Instantiated", len(secondary_countries), "secondary countries.")
-print(secondary_countries)
+# Create second account for pending invoices with
+# an initial balance of 100,000.
+invoice_account = Account("Invoices",
+                          100000,
+                          "invoices",
+                          "Pending invoices.",
+                          "blue")
+invoice_account.show()
 
-for c in secondary_countries:
-    c.show()
-    c.pprint()
+print("\nInstantiating ledgers ...")
+# Group the cash and invoices into an list of assets.
+assets_list = [cash_account, invoice_account]
 
-# Read and instantiate primary countries from the CSV file
-# based on the primary country code set.
-primary_countries = []
-with open('data/countries.csv', 'r') as file:
-    csv_reader = csv.reader(file)
-    for row in csv_reader:
-        if row[0] in primary_codes:
-            print(row)
-            primary_countries.append(PrimaryCountry(
-                row[1], row[0], row[2], row[3], row[4], 0, secondary_countries))
+assets_ledger = Ledger("Assets", assets_list)
+assets_ledger.show()
+assets_ledger.pprint()
 
-print("Instantiated", len(primary_countries), "primary countries.")
+# Creat a liabilities ledger with a loans account.
+liabilities_ledger = Ledger("Liabilities",
+                            [Account("Loans",
+                                     30000,
+                                     "loans",
+                                     "Outstanding loans.",
+                                     "red")])
+liabilities_ledger.pprint()
 
-# Test account balance update.
-accs = secondary_countries[0].liabilities()
-accs[0].deposit(100)
-secondary_countries[0].pprint()
+print("\nInstantiating balance sheet ...")
+# Create a balance sheet based on the assets and liabilities ledgers.
+balance_sheet = BalanceSheet("Balance Sheet",
+                             assets_ledger,
+                             liabilities_ledger)
+balance_sheet.pprint()
 
-print(primary_countries)
-primary_countries[0].show()
-primary_countries[0].pprint()
+print("\nCapturing snapshots ...")
+# Handle cash deposits and withdrawals using snapshots.
+# Snapshots are useful for capturing daily balances or
+# any periodic changes to create a data series.
+cash_account.withdraw(100)
+cash_account.snapshot()
+cash_account.withdraw(100)
+cash_account.snapshot()
+cash_account.deposit(300)
+cash_account.snapshot()
+print("Snapshots:", cash_account.snapshots())
 
-print("End of FBIC simulation.")
+print("\nBalance sheet ...")
+balance_sheet.pprint()
